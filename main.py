@@ -64,33 +64,33 @@ def countries():
 
 # Another request
 
-@app.route('/country', methods=['POST'])
-def ByCountry():
-    post_data = request.get_json()
-    selected_country = post_data['country']
-
-    print(selected_country)
-
-    co2 = '../excelit/paastot/paasto_tiedosto.csv'
-    population = '../excelit/vakiluvut/vakiluku_tiedosto.csv'
-
-    # opening the file
-    with open(co2, 'r') as csvfile:
-        file = csv.reader(csvfile, delimiter=',')
-
-        result = []
-        # loop through the rows of the file
-        for row in file:
-            if file.line_num is 5:
-                years = row[5:]
-            # countries start after fifth line
-            elif file.line_num > 5:
-                country = row[0]
-                if country == selected_country:
-                    # co2 / population of selected_country
-                    result = row[5:]
-
-    return jsonify({'result':result})
+# @app.route('/country', methods=['POST'])
+# def ByCountry():
+#     post_data = request.get_json()
+#     selected_country = post_data['country']
+#
+#     print(selected_country)
+#
+#     co2 = '../excelit/paastot/paasto_tiedosto.csv'
+#     population = '../excelit/vakiluvut/vakiluku_tiedosto.csv'
+#
+#     # opening the file
+#     with open(co2, 'r') as csvfile:
+#         file = csv.reader(csvfile, delimiter=',')
+#
+#         result = []
+#         # loop through the rows of the file
+#         for row in file:
+#             if file.line_num is 5:
+#                 years = row[5:]
+#             # countries start after fifth line
+#             elif file.line_num > 5:
+#                 country = row[0]
+#                 if country == selected_country:
+#                     # co2 / population of selected_country
+#                     result = row[5:]
+#
+#     return jsonify({'result':result})
 
 if __name__ == '__main__':
     print("Server is running on localhost!")
