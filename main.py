@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import csv
+from flask import request
 
 DEBUG = True
 
@@ -67,9 +68,7 @@ def countries():
 @app.route('/country', methods=['POST'])
 def ByCountry():
     post_data = request.get_json()
-    selected_country = post_data['country']
-
-    print(selected_country)
+    selected_country  = post_data['data']['country']
 
     co2 = '../excelit/paastot/paasto_tiedosto.csv'
     population = '../excelit/vakiluvut/vakiluku_tiedosto.csv'
