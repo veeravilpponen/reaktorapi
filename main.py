@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import csv
 from flask import request
+import json
 
 DEBUG = True
 
@@ -9,6 +10,9 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 CORS(app)
+
+co2 = '../excelit/paastot/paasto_tiedosto.csv'
+population = '../excelit/vakiluvut/vakiluku_tiedosto.csv'
 
 # def ByCountryByYear():
 #
@@ -51,11 +55,12 @@ CORS(app)
 #                         print(row[i_year])
 
 
-# first request
+# REQUESTS
 
+# list of countries
 @app.route('/countries', methods=['GET'])
 def countries():
-    with open('../excelit/vakiluvut/vakiluku_tiedosto.csv', 'r') as csvfile:
+    with open(population, 'r') as csvfile:
         file = csv.reader(csvfile, delimiter=',')
         countries = []
         for row in file:
@@ -63,33 +68,47 @@ def countries():
                 countries.append(row[0])
     return jsonify({'countries':countries})
 
-# Another request
-
 @app.route('/country', methods=['POST'])
-def ByCountry():
+def byCountry():
     post_data = request.get_json()
     selected_country  = post_data['data']['country']
-
-    co2 = '../excelit/paastot/paasto_tiedosto.csv'
-    population = '../excelit/vakiluvut/vakiluku_tiedosto.csv'
 
     # opening the file
     with open(co2, 'r') as csvfile:
         file = csv.reader(csvfile, delimiter=',')
 
-        result = []
+        results = []
+        years = []
+        emissions = []
+
         # loop through the rows of the file
         for row in file:
             if file.line_num is 5:
                 years = row[5:]
+                years = years[::-1]
+                years = years[1:]
             # countries start after fifth line
             elif file.line_num > 5:
                 country = row[0]
                 if country == selected_country:
-                    # co2 / population of selected_country
-                    result = row[5:]
+                    # co2 of selected_country
+                    emissions = row[5:]
+                    emissions = emissions[::-1]
+                    emissions = emissions[1:]
 
-    return jsonify({'result':result})
+        timesToLoop = len(years)
+
+        for i in range(timesToLoop):
+            year = years[i]
+            emission = emissions[i]
+            if emission == "":
+                emission = "-"
+            result = {"year": year, "emission": emission}
+            results.append(result)
+
+        print(results)
+
+    return jsonify({'results':results})
 
 if __name__ == '__main__':
     print("Server is running on localhost!")
