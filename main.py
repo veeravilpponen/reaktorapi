@@ -2,7 +2,6 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import csv
 from flask import request
-import json
 
 DEBUG = True
 
@@ -141,5 +140,4 @@ def byCountry():
     return jsonify({'results':results})
 
 if __name__ == '__main__':
-    print("Server is running on localhost!")
     app.run()
