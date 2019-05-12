@@ -71,7 +71,6 @@ def compare():
                             elif country == selected_country2:
                                 # population of selected_country2
                                 population2 = row[5:-2]
-                                print(len(population2))
                                 for x in range(len(population2)):
                                     population2[x] = float(population2[x])
                                     if emissions2[x] == "":
@@ -128,7 +127,6 @@ def byCountry():
             for row in cofile:
                 if cofile.line_num is 5:
                     years = row[5:-1]
-                    print(years)
                 # countries start after fifth line
                 elif cofile.line_num > 5:
                     country = row[0]
@@ -147,8 +145,7 @@ def byCountry():
                         country = row[0]
                         if country == selected_country:
                             # population of selected_country
-                            population = row[5:-1]
-                            print(len(population))
+                            population = row[5:-2]
                             # change population and emission values to float
                             for x in range(len(population)):
                                 population[x] = float(population[x])
