@@ -3,15 +3,15 @@ from flask_cors import CORS
 import csv
 from flask import request
 
-DEBUG = True
+# DEBUG = True
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 
 CORS(app)
 
-co2 = '../excelit/paastot/paasto_tiedosto.csv'
-po = '../excelit/vakiluvut/vakiluku_tiedosto.csv'
+co2 = './excelit/paastot/paasto_tiedosto.csv'
+po = './excelit/vakiluvut/vakiluku_tiedosto.csv'
 
 # REQUESTS
 @app.route('/compare', methods=['POST'])
