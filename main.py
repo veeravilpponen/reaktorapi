@@ -90,7 +90,6 @@ def countries():
             if file.line_num > 5:
                 country = {"value": file.line_num,"text": row[0]}
                 countries.append(country)
-                print(countries)
     return jsonify({'countries':countries})
 
 # emissions by country and optionally per capita
